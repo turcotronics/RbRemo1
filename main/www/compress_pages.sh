@@ -17,3 +17,9 @@ for file in `ls *.js`; do
     gzip -f "$file" && \
     mv "copy_$file" "$file"
 done
+for file in `ls *.ico`; do
+    echo "Compressing: $file"
+    cp "$file" "copy_$file" && \
+    gzip -f "$file" && \
+    mv "copy_$file" "$file"
+done

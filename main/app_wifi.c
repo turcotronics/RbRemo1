@@ -1,3 +1,32 @@
+/*
+ Modified ESPRESSIF MIT License
+ 
+ Copyright (c) <ESPRESSIF SYSTEMS (SHANGHAI) PTE LTD>
+				Bond Keevil (bkeevil), https://github.com/bkeevil/esp32-cam
+				Turco Rodolfo, Turcotronics, https://turcotronics.it/ 
+ 
+ Permission is hereby granted for use on all ESPRESSIF SYSTEMS products, in which case,
+ it is free of charge, to any person obtaining a copy of this software and associated
+ documentation files (the "Software"), to deal in the Software without restriction, including
+ without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense,
+ and/or sell copies of the Software, and to permit persons to whom the Software is furnished
+ to do so, subject to the following conditions:
+
+ The names of Turcotronics, Robello and TuT may not be used to endorse or promote
+ products derived from this software without specific prior written permission.
+ 
+ The above copyright notice and this permission notice shall be included in all copies or
+ substantial portions of the Software.
+ 
+ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS
+ FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR
+ COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER
+ IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
+ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+
+*/
+
 #include <string.h>
 #include "freertos/FreeRTOS.h"
 #include "freertos/task.h"
@@ -20,6 +49,7 @@ extern EventGroupHandle_t event_group;
 
 static int s_retry_num = 0;
 
+/*oooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo*/
 static char *wifi_authmode_to_str(wifi_auth_mode_t mode) {
 	switch(mode) {
 	case WIFI_AUTH_OPEN:
@@ -39,12 +69,14 @@ static char *wifi_authmode_to_str(wifi_auth_mode_t mode) {
 	}
 }
 
+/*oooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo*/
 float wifi_get_tx_power() {
   int8_t tx_power;
   ESP_ERROR_CHECK(esp_wifi_get_max_tx_power(&tx_power));
   return tx_power * 0.25;
 }
 
+/*oooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo*/
 int wifi_get_rssi() {
   wifi_ap_record_t apinfo;
 
@@ -52,6 +84,7 @@ int wifi_get_rssi() {
   return apinfo.rssi;
 }
 
+/*oooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo*/
 int wifi_connection_count() {
   wifi_sta_list_t list;
   if (esp_wifi_ap_get_sta_list(&list) == ESP_OK) {
@@ -61,6 +94,7 @@ int wifi_connection_count() {
   }
 }
 
+/*oooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo*/
 static void wifi_dump_ap_info() {
     wifi_ap_record_t apinfo;
     int8_t tx_power;
@@ -76,6 +110,7 @@ static void wifi_dump_ap_info() {
     ESP_LOGI(TAG,"Phy Mode: 11%s%s%s %s",apinfo.phy_11b ? "B" : "",apinfo.phy_11g ? "G" : "", apinfo.phy_11n ? "N" : "", apinfo.phy_lr ? "LR" : "");
 }
 
+/*oooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo*/
 void wifi_init_softap()
 {
     if (strcmp(CONFIG_SERVER_IP, "192.168.4.1"))
@@ -107,6 +142,7 @@ void wifi_init_softap()
              CONFIG_ESP_WIFI_AP_SSID, CONFIG_ESP_WIFI_AP_PASSWORD);
 }
 
+/*oooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo*/
 static void wifi_init_sta(void) {
     wifi_config_t wifi_config;
     memset(&wifi_config, 0, sizeof(wifi_config_t));
@@ -127,20 +163,18 @@ static void wifi_init_sta(void) {
     ESP_ERROR_CHECK(esp_wifi_set_country(&wifi_country));
  
     ESP_LOGI(TAG, "wifi_init_sta finished.");
-    ESP_LOGI(TAG, "connect to ap SSID:%s password:%s",
-             wifi_config.sta.ssid, wifi_config.sta.password);
+    ESP_LOGI(TAG, "connect to ap SSID:%s password:%s", wifi_config.sta.ssid, wifi_config.sta.password);
 }
 
+/*oooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo*/
 static void event_handler(void* arg, esp_event_base_t event_base, int32_t event_id, void* event_data)
 {      
     if (event_base == WIFI_EVENT && event_id == WIFI_EVENT_AP_STACONNECTED) {
         wifi_event_ap_staconnected_t* event = (wifi_event_ap_staconnected_t*) event_data;
-        ESP_LOGI(TAG, "station "MACSTR" join, AID=%d",
-                 MAC2STR(event->mac), event->aid);         
+        ESP_LOGI(TAG, "station "MACSTR" join, AID=%d", MAC2STR(event->mac), event->aid);         
     } else if (event_base == WIFI_EVENT && event_id == WIFI_EVENT_AP_STADISCONNECTED) {
         wifi_event_ap_stadisconnected_t* event = (wifi_event_ap_stadisconnected_t*) event_data;
-        ESP_LOGI(TAG, "station "MACSTR" leave, AID=%d",
-                 MAC2STR(event->mac), event->aid);
+        ESP_LOGI(TAG, "station "MACSTR" leave, AID=%d",  MAC2STR(event->mac), event->aid);
     } else if (event_base == WIFI_EVENT && event_id == WIFI_EVENT_STA_START) {
         esp_wifi_connect();
     } else if (event_base == WIFI_EVENT && event_id == WIFI_EVENT_STA_DISCONNECTED) {
@@ -170,6 +204,7 @@ static void event_handler(void* arg, esp_event_base_t event_base, int32_t event_
     }
 }
 
+/*oooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo*/
 void app_wifi_startup() {
     tcpip_adapter_init();
     tcpip_adapter_set_hostname(TCPIP_ADAPTER_IF_STA,settings.hostname);
@@ -188,16 +223,23 @@ void app_wifi_startup() {
 
     ESP_ERROR_CHECK(esp_event_handler_register(WIFI_EVENT, ESP_EVENT_ANY_ID, &event_handler, NULL));
     ESP_ERROR_CHECK(esp_event_handler_register(IP_EVENT, IP_EVENT_STA_GOT_IP, &event_handler, NULL));
-    //ESP_ERROR_CHECK(esp_event_handler_register(IP_EVENT, IP_EVENT_AP_STAIPASSIGNED, &event_handler, NULL));
+    ESP_ERROR_CHECK(esp_event_handler_register(IP_EVENT, IP_EVENT_AP_STAIPASSIGNED, &event_handler, NULL));
     ESP_ERROR_CHECK(esp_wifi_init(&cfg));
-    ESP_ERROR_CHECK(esp_wifi_set_mode(WIFI_MODE_STA));
-
-    wifi_init_sta();
+    
+    if(strlen(settings.wifi_ssid)==0) {
+		ESP_LOGI(TAG, "Starting wifi in SoftAP mode due empty SSID.");
+		ESP_ERROR_CHECK(esp_wifi_set_mode(WIFI_MODE_AP));
+		wifi_init_softap();
+	} else {
+		ESP_ERROR_CHECK(esp_wifi_set_mode(WIFI_MODE_STA));
+		wifi_init_sta();
+	}
     
     ESP_ERROR_CHECK(esp_wifi_start());
     ESP_ERROR_CHECK(esp_wifi_set_max_tx_power(127));
 }
 
+/*oooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo*/
 void app_wifi_shutdown() {
     esp_wifi_disconnect();
     esp_wifi_stop();
