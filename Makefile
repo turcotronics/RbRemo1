@@ -3,7 +3,7 @@
 # project subdirectory.
 #
 
-PROJECT_NAME := esp32-cam
+PROJECT_NAME := RbRemo1
 
 #SOLUTION_PATH ?= $(abspath $(shell pwd))/../../..
 
