@@ -1,36 +1,23 @@
-# ESP32-CAM
+# RbRemo1
 
-The goal of this project is to create a functional webcam firmware for ESP32 based camera boards with OV2640 modules using the ESP-IDF framework. Such modules often come with optional components like high power LED "flash", an OLED display, or a motion detector. This project will incorporate compile time support for optional libraries to support these components.
+This is the firmware of Turcotronics Remo1 remote for the Robello T1 robots.
+It runs on a ESP32 NodeMCU-32S board.
+It can be used to control your robots too, both hardware and software are open :-)
+You can buy the remotes, the robots or parts of them from https://turcotronics.it
+In the robot the WiFi and Bluetooth connection point is a ESP32-CAM,
+check https://github.com/turcotronics for the RbT1E32C robot firmware.
+The robots can be controlled from remotes, phones, tablets and computers.
 
-![Screenshot Image](/images/screenshot.png "Screenshot")
+This project was originally forked from https://github.com/bkeevil/esp32-cam
 
-This project was originally forked from one of the example programs for the ESP-WHO face recognition framework by Espressif. The face detection and recognition code has been removed to provide more resources for other features and to eliminate a dependency on external SPI RAM. In its place I have added:
-
-* An improved web interface
-* The ability to modify wifi and network settings from the web interface
-* Persistent storage of camera and other settings in NVS
-* An SSD1306 display driver and code to outputs pertinent information about the wifi connection and frame rate
-* An LED Illuminator driver to control the intensity of an LED flash
-* An mDNS server to announce camera services to the local network
-* Implement the NTP client and RTC for date/time
-
-The current roadmap involves finishing testing of the features above and creating an initial release before moving on to some planned new features:
-
-* A basic font library for the lcd and image overlays
-* Playback of image on LCD screen
-* A basic motion detection library [See this](https://eloquentarduino.github.io/2020/01/motion-detection-with-esp32-cam-only-arduino-version/) [and this](https://github.com/alanesq/CameraWifiMotion)
-* Record and playback from an SD card
-* Basic ONVIF support MJPEG streams only.
-
-The resources available on the ESP32 to support cameras are very limited and users should not expect to see anything like the full resolutions and frame rates the OV2640 is capable of.
 
 ## License
 
-Espressif originally released their source code under the MIT license. I will release my contributions to this source code under the same license:
-
- ESPRESSIF MIT License
+ Modified ESPRESSIF MIT License
  
- Copyright (c) 2018 <ESPRESSIF SYSTEMS (SHANGHAI) PTE LTD>
+ Copyright (c) <ESPRESSIF SYSTEMS (SHANGHAI) PTE LTD>
+			    Bond Keevil (bkeevil), https://github.com/bkeevil/esp32-cam
+				Turco Rodolfo, Turcotronics, https://turcotronics.it/ 
  
  Permission is hereby granted for use on all ESPRESSIF SYSTEMS products, in which case,
  it is free of charge, to any person obtaining a copy of this software and associated
@@ -38,6 +25,9 @@ Espressif originally released their source code under the MIT license. I will re
  without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense,
  and/or sell copies of the Software, and to permit persons to whom the Software is furnished
  to do so, subject to the following conditions:
+
+ The names of Turcotronics, Robello and TuT may not be used to endorse or promote
+ products derived from this software without specific prior written permission.
  
  The above copyright notice and this permission notice shall be included in all copies or
  substantial portions of the Software.
@@ -49,9 +39,11 @@ Espressif originally released their source code under the MIT license. I will re
  IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
  CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
+
 ## Installation
 
-The source code requires the [installation of the ESP-IDF toolchain and development framework](https://docs.espressif.com/projects/esp-idf/en/stable/get-started/index.html)
+The source code requires the [installation of the ESP-IDF toolchain and development framework]
+(https://docs.espressif.com/projects/esp-idf/en/stable/get-started/index.html)
 
 **The source code works with the release/v4.0 branch.**
 
@@ -65,14 +57,14 @@ mkdir myprojects
 cd myprojects
 ```
 
-clone the repository using the recursive option:
+Clone the repository using the recursive option:
 
 ```
 git clone --recursive https://github.com/bkeevil/esp32-cam.git
 cd esp32-cam
-```  
+```
 
-Compress the stylesheet, html and javascript pages in main/www
+Compress the stylesheet, html and javascript pages in main/www:
 
 ```
 cd main/www
@@ -93,17 +85,10 @@ cd ..
 Then, to configure the source code you need to run `make menuconfig` from the root of the source tree. This will bring up an ncurses based repository editor.
 
 Important settings are:
-
 - Select a USB port for uploading the firmware under *Serial Flasher Config -> Default serial port*
-- Ensure that *Partition Table -> Parititon Table* is set to use the *Custom partition table CSV) called "partitions.csv"
 - Select what board you are using under *Camera Web Server -> Camera Pins*
-- If your board has an LED flash, enable it under *Camera Web Server -> LED Illuminator*
 - You can select default wifi settings under *Camera Web Server -> Wifi Settings*
-- If your board has an SSD1306 based OLED display, enable it under *Component Config -> SSD1306 Configuration* and select pins for SDA and SCL
-- To use additional external SPI RAM that may be on your board, enable it using *Component Config -> ESP32 Specific -> Support for external, SPI-connected RAM*
-- To enable font overlays, under *Font Configuration* check *Store Font Partition* (Uses approximately 240K of flash)
-- Under *Component Config -> Camera Configuration* select camera type OV2640 and pin it to Core1
-- Under *Component Config -> WiFi* pin the WiFi task to Core0
+- Under *Component Config* pin the WiFi and Bluetooth tasks to Core0
 - Enable NTP and select a default NTP server and timezone under *NTP configuration*
 
 When your settings are complete, save them and exit.
@@ -114,19 +99,22 @@ Flash the binary file to your ESP32 module using `make flash`
 
 Monitor the debug serial output by running `make monitor`
 
-### Windows 10 Installation Notes
 
-Instead of using make xxxx commands, you have to use idf.py xxxx commands. For example:
+### Build Notes
+
+Instead of using make xxxx commands, you can use idf.py xxxx commands, it's my preferred way on Ubuntu.
 
 ```
 idf.py build
 idf.py menuconfig
 idf.py app
-idf.py -p Portname app-flash
+idf.py -p /dev/ttyUSB0 app-flash
 ```
 
-Start ESP-IDF Command Prompt from Windows Start Menu to have idf.py available automatically.
 
+### Windows Notes
+
+Start ESP-IDF Command Prompt from Windows Start Menu to have idf.py available automatically.
 To further simplify the build process, create a build-windows-defaultcomport file (without any extension) with your devices COM port, e.g. COM15, then from within the ESP-IFD prompt run the build script.
 ```
 echo COM15 > build-windows-defaultcomport
@@ -146,19 +134,3 @@ To connect to the access point, point a browser to 192.168.4.1. There is no user
 
 From the web interface, select a Wifi SSID and password and optionally specify a static IP address and other network settings. Reboot the device for the settings to take effect.
 
-## Web Camera URLS
-
-Picture: http://IP/capture
-
-Stream: http://IP:81/stream
-
-Control LED: http://IP/control?var=led_intensity&val=[0...255]
-
-## Notes
-
-- Although the ESP32-Camera driver provides support for the OV3660 sensor, it is not supported by this firmware due to the unavailability of these sensors on the market for testing purposes.
-- The esp_restart() function used by the web interface for a software reboot is a bit buggy. You might have to unplug the device to force a hardware restart.
-
-## Contributions 
-
-Developer contributions that further the goals of this project are most welcome.
