@@ -5,7 +5,7 @@ It runs on a ESP32 NodeMCU-32S board.
 It can be used to control your robots too, both hardware and software are open :-)
 You can buy the remotes, the robots or parts of them from https://turcotronics.it
 In the robot the WiFi and Bluetooth connection point is a ESP32-CAM,
-check https://github.com/turcotronics for the RbT1E32C robot firmware.
+check https://github.com/turcotronics/RbT1E32C for the robot firmware.
 The robots can be controlled from remotes, phones, tablets and computers.
 
 This project was originally forked from https://github.com/bkeevil/esp32-cam
@@ -15,9 +15,9 @@ This project was originally forked from https://github.com/bkeevil/esp32-cam
 
  Modified ESPRESSIF MIT License
  
- Copyright (c) <ESPRESSIF SYSTEMS (SHANGHAI) PTE LTD>
-			    Bond Keevil (bkeevil), https://github.com/bkeevil/esp32-cam
-				Turco Rodolfo, Turcotronics, https://turcotronics.it/ 
+ Copyright (c)  - <ESPRESSIF SYSTEMS (SHANGHAI) PTE LTD>
+                - <Bond Keevil (bkeevil), https://github.com/bkeevil/esp32-cam>
+                - <Turco Rodolfo, Turcotronics, https://turcotronics.it>
  
  Permission is hereby granted for use on all ESPRESSIF SYSTEMS products, in which case,
  it is free of charge, to any person obtaining a copy of this software and associated
