@@ -3,11 +3,11 @@
 This is the firmware of Turcotronics Remo1 remote for the Robello T1 robots.
 It runs on a ESP32 NodeMCU-32S board.
 
-It can be used to control your robots too, both hardware and software are open :-)
-You can buy remotes, robots or parts of them from https://turcotronics.it
-The robots can be controlled from remotes, phones, tablets, computers, ...
+It can be used to control your robots too, both hardware and software are open :-) 
+If you wish you can buy remotes, robots or parts of them from https://turcotronics.it 
+The robots can be controlled from remotes, phones, tablets, computers, ... 
 
-In the robot the WiFi and Bluetooth connection point is a ESP32-CAM,
+In the robot the WiFi and Bluetooth connection point is a ESP32-CAM, 
 check https://github.com/turcotronics/RbT1E32C for the robot firmware.
 
 This project was originally forked from https://github.com/bkeevil/esp32-cam
@@ -15,37 +15,33 @@ This project was originally forked from https://github.com/bkeevil/esp32-cam
 
 ## License
 
- Modified ESPRESSIF MIT License
- 
-<<<<<<< HEAD
- Copyright (c)  - <ESPRESSIF SYSTEMS (SHANGHAI) PTE LTD>
-                - <Bond Keevil (bkeevil), https://github.com/bkeevil/esp32-cam>
-                - <Turco Rodolfo, Turcotronics, https://turcotronics.it>
-=======
- Copyright (c)	- <ESPRESSIF SYSTEMS (SHANGHAI) PTE LTD>
-		- <Bond Keevil (bkeevil), https://github.com/bkeevil/esp32-cam>
-		- <Turco Rodolfo, Turcotronics, https://turcotronics.it>
->>>>>>> 432763cc7bea6aec2c8874f6fdf5ecc52b4dec97
- 
- Permission is hereby granted for use on all ESPRESSIF SYSTEMS products, in which case,
- it is free of charge, to any person obtaining a copy of this software and associated
- documentation files (the "Software"), to deal in the Software without restriction, including
- without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense,
- and/or sell copies of the Software, and to permit persons to whom the Software is furnished
- to do so, subject to the following conditions:
+Modified ESPRESSIF MIT License
 
- The names of Turcotronics, Robello and TuT may not be used to endorse or promote
- products derived from this software without specific prior written permission.
- 
- The above copyright notice and this permission notice shall be included in all copies or
- substantial portions of the Software.
- 
- THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS
- FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR
- COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER
- IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
- CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+Copyright (c)
+
+* ESPRESSIF SYSTEMS (SHANGHAI) PTE LTD
+* Bond Keevil (bkeevil), https://github.com/bkeevil/esp32-cam
+* Turco Rodolfo, Turcotronics, https://turcotronics.it
+
+Permission is hereby granted for use on all ESPRESSIF SYSTEMS products, in which case,
+it is free of charge, to any person obtaining a copy of this software and associated
+documentation files (the "Software"), to deal in the Software without restriction, including
+without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense,
+and/or sell copies of the Software, and to permit persons to whom the Software is furnished
+to do so, subject to the following conditions:
+
+The names of Turcotronics, Robello and TuT may not be used to endorse or promote
+products derived from this software without specific prior written permission.
+
+The above copyright notice and this permission notice shall be included in all copies or
+substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS
+FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR
+COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER
+IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
+CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 
 ## Installation
