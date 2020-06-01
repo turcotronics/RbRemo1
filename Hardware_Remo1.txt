@@ -1,0 +1,104 @@
+Remo1 remote for Turcotronics Robello T1xxx robots
+This is an open hardware, open software project.
+
+The remote use a NodeMCU-32S connected to the robot ESP32-CAM module.
+
+__________________________________________________
+TODO:
+- pairing, IO0 long press per reset configurazione
+- BT pairing, password dopo connessione
+- BT nome univoco
+- Configurazione Robello T1 a cui collegarsi
+- BT campo: BT password
+- BT reconnect on connection lost
+- se non connesso WiFi mandare comandi via BT
+- cicalino, bip se non connesso o perde connessione
+- RGB
+- comandi estesi tasti
+- Connessione con AP multipli
+- ota https://github.com/espressif/esp-iot-solution
+- disabilitare logging da menuconfig
+- sdkconfig.defaults
+
+For T11xx, T12xx robot:
+- ultrasuoni
+- sync con robot
+- ULP Audio in
+- ULP Audio out
+
+__________________________________________________
+Commands:
+    Remote radio: (not implemented)
+             16bit RbID, 8bit command, 8bit CRC8
+    Command: 0x01 Front, 0x02 Front-Left, 0x03 Left, 0x04 Rear-Left,
+             0x05 Rear, 0x06 Rear-Right, 0x07 Right, 0x08 Front-Right,
+             0x09 Light ON, 0x0A Light OFF, 0x0B FollowMe ON, 0x0C FollowMe OFF,
+             0x0D GotoBase, 0x0E Time Sync
+             
+    Remote Bluetooth and WiFi serial data:
+        KeyUp      §Bb0 off, §Bb1 on
+        KeyDown    §Bh0 off, §Bh1 on
+        KeyLeft    §Bd0 off, §Bd1 on
+        KeyRight   §Bf0 off, §Bf1 on
+
+__________________________________________________              
+4 keys: 8 Directions, Set (Long Up Down), ON/OFF Light (Set Left),
+        GotoBase (Set Up), FollowMe on/off (Set Down), Goto mark point (Set Right),
+        Store mark point (Set Long Right), Reset (Long Left Right)
+        
+__________________________________________________
+NodeMCU-32S pinout:
+3.3V                pin1  3.3V
+EN/RESET            pin2  EN/RESET
+KeyUp               pin3  P36
+KeyDown             pin4  P39
+KeyLeft             pin5  P34 
+KeyRight            pin6  P35 
+ExpBus              pin7  P32 ADC4
+Buzzer0             pin8  P33 ADC5
+Buzzer1             pin9  P25 DAC1 ADC18
+ExpBus              pin10 P26 DAC2 ADC19
+USTX0               pin11 P27
+USTX1               pin12 P14
+RGBLED              pin13 P12
+GND                 pin14 GND
+ExpBus              pin15 P13 ADC14
+Flash used          pin16 P9
+Flash used          pin17 P10
+Flash used          pin18 P11
+Vin 5V              pin19 Vin 5V
+Flash used          pin20 P6
+Flash used          pin21 P7
+Flash used          pin22 P8
+ChargeLed           pin23 P15 ADC13 TOUCH3
+BoardLed            pin24 P2
+IO0                 pin25 P0  IO0
+ExpBusReq           pin26 P4  
+ExpBusRx            pin27 P16 RxSer2 BR_115200_8_N_1 variabile
+ExpBusTx            pin28 P17 TxSer2
+ExpBus SPI SS       pin29 P5  SPI_SS
+ExpBus SPI SCK      pin30 P18 SPI_SCK
+ExpBus SPI MISO     pin31 P19 SPI_MISO
+GND                 pin32 GND
+ExpBus I2C SDA      pin33 P21 I2C_SDA
+USBRx               pin34 P3  RxSer0
+USBTx               pin35 P1  TxSer0
+ExpBus I2C SCL      pin36 P22 I2C_SCL
+ExpBus SPI MOSI     pin37 P23 SPI_MOSI
+GND                 pin38 GND
+
+Details:
+- RGB led is the WS2812B
+- A Capacitor of 100nF is required from EN/RESET pin2 to GND, or usb firmware download is unreliable
+- The battery is a 3.7V Li-ion 18650 connected with a 1N4007 to 3.3V
+- A 03962A charge board is used for the battery, pin6 is connected to pin23 of NodeMCU-32S
+- Keys needs 10K pullup to 3.3V
+- A 31mm long, 0.5mm2 rigid wire antenna improve bluetooth/WiFi range
+- Ultrasound capsules USTX are two in parallel
+- The buzzer is the common quarz one
+- Baudrate on USB is 115200, 8N1 SPP
+
+_________________________
+Expansion connector 8+8 pins
+Up:   GND, IO0,        ExpBusReq, ExpBusRx, ExpBusTx,  SPI_SS,  SPI_SCK,  SPI_MISO
+Down: GND, Vbatt 3.7V, P32_ADC4,  P26_DAC2, P13_ADC14, I2C_SDA, SPI_MOSI, I2C_SCL

@@ -1,16 +1,19 @@
 # RbRemo1
 
 This is the firmware of Turcotronics Remo1 remote for the Robello T1 robots.
-It runs on a ESP32 NodeMCU-32S board.
 
-It can be used to control your robots too, both hardware and software are open :-) 
+It runs on a ESP32 NodeMCU-32S board.
+Both Bluetooth and WiFi connections are used, the internal web server let control from phone/PC too.
+
+It can be used to control your robots, both hardware and software are open, see Hardware_Remo1.txt
+
 If you wish you can buy remotes, robots or parts of them from https://turcotronics.it 
 The robots can be controlled from remotes, phones, tablets, computers, ... 
 
 In the robot the WiFi and Bluetooth connection point is a ESP32-CAM, 
 check https://github.com/turcotronics/RbT1E32C for the robot firmware.
 
-This project was originally forked from https://github.com/bkeevil/esp32-cam
+This software was originally forked from https://github.com/bkeevil/esp32-cam
 
 
 ## License
